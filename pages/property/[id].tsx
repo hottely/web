@@ -7,7 +7,7 @@ const PropertyPage = () => {
   const router = useRouter();
   const { id } = router.query;
 
-  const { data, loading, error } = useGetPropertyQuery({
+  const { data, loading, error, refetch } = useGetPropertyQuery({
     variables: { propertyId: id as string },
   });
 
@@ -23,7 +23,7 @@ const PropertyPage = () => {
 
   return (
     <Layout>
-      <PropertyInfo property={property} />
+      <PropertyInfo property={property} refetch={refetch} />
     </Layout>
   );
 };

@@ -82,3 +82,17 @@ export const Name = styled.div`
   font-size: 16px;
   font-weight: bold;
 `;
+
+export const Heart = styled.div`
+  transition: all 0.2s ease-in-out;
+  &:hover {
+    transform: scale(1.1);
+  }
+  cursor: pointer;
+  z-index: 1;
+  position: absolute;
+  font-size: 25px;
+  color: white;
+  right: 10px;
+  top: 10px;
+`;

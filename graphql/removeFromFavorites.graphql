@@ -1,0 +1,3 @@
+mutation removeFromFavorites($propertyId: String!) {
+  removeFromFavorites(propertyId: $propertyId)
+}

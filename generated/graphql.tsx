@@ -37,6 +37,8 @@ export type LoginResponse = {
 export type Mutation = {
   __typename?: 'Mutation';
   uploadProperty: Scalars['Boolean'];
+  addToFavorites: Scalars['Boolean'];
+  removeFromFavorites: Scalars['Boolean'];
   createBooking: Scalars['Boolean'];
   editProfile?: Maybe<User>;
   login: LoginResponse;
@@ -48,6 +50,16 @@ export type Mutation = {
 
 export type MutationUploadPropertyArgs = {
   data: PropertyUploadInput;
+};
+
+
+export type MutationAddToFavoritesArgs = {
+  propertyId: Scalars['String'];
+};
+
+
+export type MutationRemoveFromFavoritesArgs = {
+  propertyId: Scalars['String'];
 };
 
 
@@ -98,6 +110,7 @@ export type Query = {
   getProperties: Scalars['JSON'];
   getProperty: Scalars['JSON'];
   getListings: Scalars['JSON'];
+  getFavorites: Scalars['JSON'];
   getBookings: Scalars['JSON'];
   getMyBookings: Scalars['JSON'];
   getBookingsForProperty: Scalars['JSON'];
@@ -140,6 +153,16 @@ export type User = {
   updatedAt: Scalars['DateTime'];
 };
 
+export type AddToFavoritesMutationVariables = Exact<{
+  propertyId: Scalars['String'];
+}>;
+
+
+export type AddToFavoritesMutation = (
+  { __typename?: 'Mutation' }
+  & Pick<Mutation, 'addToFavorites'>
+);
+
 export type CreateBookingMutationVariables = Exact<{
   propertyId: Scalars['String'];
   startDate: Scalars['String'];
@@ -160,6 +183,14 @@ export type GetBookingsForPropertyQueryVariables = Exact<{
 export type GetBookingsForPropertyQuery = (
   { __typename?: 'Query' }
   & Pick<Query, 'getBookingsForProperty'>
+);
+
+export type GetFavoritesQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetFavoritesQuery = (
+  { __typename?: 'Query' }
+  & Pick<Query, 'getFavorites'>
 );
 
 export type GetListingsQueryVariables = Exact<{ [key: string]: never; }>;
@@ -253,6 +284,16 @@ export type RegisterMutation = (
   ) }
 );
 
+export type RemoveFromFavoritesMutationVariables = Exact<{
+  propertyId: Scalars['String'];
+}>;
+
+
+export type RemoveFromFavoritesMutation = (
+  { __typename?: 'Mutation' }
+  & Pick<Mutation, 'removeFromFavorites'>
+);
+
 export type UploadPropertyMutationVariables = Exact<{
   name: Scalars['String'];
   description: Scalars['String'];
@@ -271,6 +312,42 @@ export type UploadPropertyMutation = (
 );
 
 
+export const AddToFavoritesDocument = gql`
+    mutation addToFavorites($propertyId: String!) {
+  addToFavorites(propertyId: $propertyId)
+}
+    `;
+export type AddToFavoritesMutationFn = Apollo.MutationFunction<AddToFavoritesMutation, AddToFavoritesMutationVariables>;
+export type AddToFavoritesComponentProps = Omit<ApolloReactComponents.MutationComponentOptions<AddToFavoritesMutation, AddToFavoritesMutationVariables>, 'mutation'>;
+
+    export const AddToFavoritesComponent = (props: AddToFavoritesComponentProps) => (
+      <ApolloReactComponents.Mutation<AddToFavoritesMutation, AddToFavoritesMutationVariables> mutation={AddToFavoritesDocument} {...props} />
+    );
+    
+
+/**
+ * __useAddToFavoritesMutation__
+ *
+ * To run a mutation, you first call `useAddToFavoritesMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useAddToFavoritesMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [addToFavoritesMutation, { data, loading, error }] = useAddToFavoritesMutation({
+ *   variables: {
+ *      propertyId: // value for 'propertyId'
+ *   },
+ * });
+ */
+export function useAddToFavoritesMutation(baseOptions?: Apollo.MutationHookOptions<AddToFavoritesMutation, AddToFavoritesMutationVariables>) {
+        return Apollo.useMutation<AddToFavoritesMutation, AddToFavoritesMutationVariables>(AddToFavoritesDocument, baseOptions);
+      }
+export type AddToFavoritesMutationHookResult = ReturnType<typeof useAddToFavoritesMutation>;
+export type AddToFavoritesMutationResult = Apollo.MutationResult<AddToFavoritesMutation>;
+export type AddToFavoritesMutationOptions = Apollo.BaseMutationOptions<AddToFavoritesMutation, AddToFavoritesMutationVariables>;
 export const CreateBookingDocument = gql`
     mutation createBooking($propertyId: String!, $startDate: String!, $endDate: String!) {
   createBooking(propertyId: $propertyId, startDate: $startDate, endDate: $endDate)
@@ -346,6 +423,42 @@ export function useGetBookingsForPropertyLazyQuery(baseOptions?: Apollo.LazyQuer
 export type GetBookingsForPropertyQueryHookResult = ReturnType<typeof useGetBookingsForPropertyQuery>;
 export type GetBookingsForPropertyLazyQueryHookResult = ReturnType<typeof useGetBookingsForPropertyLazyQuery>;
 export type GetBookingsForPropertyQueryResult = Apollo.QueryResult<GetBookingsForPropertyQuery, GetBookingsForPropertyQueryVariables>;
+export const GetFavoritesDocument = gql`
+    query getFavorites {
+  getFavorites
+}
+    `;
+export type GetFavoritesComponentProps = Omit<ApolloReactComponents.QueryComponentOptions<GetFavoritesQuery, GetFavoritesQueryVariables>, 'query'>;
+
+    export const GetFavoritesComponent = (props: GetFavoritesComponentProps) => (
+      <ApolloReactComponents.Query<GetFavoritesQuery, GetFavoritesQueryVariables> query={GetFavoritesDocument} {...props} />
+    );
+    
+
+/**
+ * __useGetFavoritesQuery__
+ *
+ * To run a query within a React component, call `useGetFavoritesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetFavoritesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetFavoritesQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useGetFavoritesQuery(baseOptions?: Apollo.QueryHookOptions<GetFavoritesQuery, GetFavoritesQueryVariables>) {
+        return Apollo.useQuery<GetFavoritesQuery, GetFavoritesQueryVariables>(GetFavoritesDocument, baseOptions);
+      }
+export function useGetFavoritesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetFavoritesQuery, GetFavoritesQueryVariables>) {
+          return Apollo.useLazyQuery<GetFavoritesQuery, GetFavoritesQueryVariables>(GetFavoritesDocument, baseOptions);
+        }
+export type GetFavoritesQueryHookResult = ReturnType<typeof useGetFavoritesQuery>;
+export type GetFavoritesLazyQueryHookResult = ReturnType<typeof useGetFavoritesLazyQuery>;
+export type GetFavoritesQueryResult = Apollo.QueryResult<GetFavoritesQuery, GetFavoritesQueryVariables>;
 export const GetListingsDocument = gql`
     query getListings {
   getListings
@@ -658,6 +771,42 @@ export function useRegisterMutation(baseOptions?: Apollo.MutationHookOptions<Reg
 export type RegisterMutationHookResult = ReturnType<typeof useRegisterMutation>;
 export type RegisterMutationResult = Apollo.MutationResult<RegisterMutation>;
 export type RegisterMutationOptions = Apollo.BaseMutationOptions<RegisterMutation, RegisterMutationVariables>;
+export const RemoveFromFavoritesDocument = gql`
+    mutation removeFromFavorites($propertyId: String!) {
+  removeFromFavorites(propertyId: $propertyId)
+}
+    `;
+export type RemoveFromFavoritesMutationFn = Apollo.MutationFunction<RemoveFromFavoritesMutation, RemoveFromFavoritesMutationVariables>;
+export type RemoveFromFavoritesComponentProps = Omit<ApolloReactComponents.MutationComponentOptions<RemoveFromFavoritesMutation, RemoveFromFavoritesMutationVariables>, 'mutation'>;
+
+    export const RemoveFromFavoritesComponent = (props: RemoveFromFavoritesComponentProps) => (
+      <ApolloReactComponents.Mutation<RemoveFromFavoritesMutation, RemoveFromFavoritesMutationVariables> mutation={RemoveFromFavoritesDocument} {...props} />
+    );
+    
+
+/**
+ * __useRemoveFromFavoritesMutation__
+ *
+ * To run a mutation, you first call `useRemoveFromFavoritesMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useRemoveFromFavoritesMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [removeFromFavoritesMutation, { data, loading, error }] = useRemoveFromFavoritesMutation({
+ *   variables: {
+ *      propertyId: // value for 'propertyId'
+ *   },
+ * });
+ */
+export function useRemoveFromFavoritesMutation(baseOptions?: Apollo.MutationHookOptions<RemoveFromFavoritesMutation, RemoveFromFavoritesMutationVariables>) {
+        return Apollo.useMutation<RemoveFromFavoritesMutation, RemoveFromFavoritesMutationVariables>(RemoveFromFavoritesDocument, baseOptions);
+      }
+export type RemoveFromFavoritesMutationHookResult = ReturnType<typeof useRemoveFromFavoritesMutation>;
+export type RemoveFromFavoritesMutationResult = Apollo.MutationResult<RemoveFromFavoritesMutation>;
+export type RemoveFromFavoritesMutationOptions = Apollo.BaseMutationOptions<RemoveFromFavoritesMutation, RemoveFromFavoritesMutationVariables>;
 export const UploadPropertyDocument = gql`
     mutation uploadProperty($name: String!, $description: String!, $price: Float!, $bedrooms: Int!, $bathrooms: Int!, $pets: Boolean!, $amenities: [String!]!, $images: [String!]!) {
   uploadProperty(

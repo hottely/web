@@ -4,7 +4,6 @@ import LoadingIndicator from "components/ui/LoadingIndicator";
 import PropertyCard from "components/ui/PropertyCard/PropertyCard";
 import { useGetPropertiesQuery } from "generated/graphql";
 import withAuth from "lib/hocs/withAuth";
-import { lazy, useState } from "react";
 import styled from "styled-components";
 
 const Container = styled.div`
@@ -27,7 +26,7 @@ const TitleContainer = styled.div`
 `;
 
 const PropertiesPage = () => {
-  const { data, loading, error } = useGetPropertiesQuery();
+  const { data, loading, error, refetch } = useGetPropertiesQuery();
 
   const properties = data?.getProperties || [];
   const fetching = loading || error;
@@ -75,7 +74,7 @@ const PropertiesPage = () => {
                     sm={6}
                     lg={4}
                   >
-                    <PropertyCard {...property} />
+                    <PropertyCard {...property} refetch={refetch} />
                   </Grid>
                 ))}
               </Grid>

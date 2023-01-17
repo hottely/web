@@ -8,6 +8,7 @@ import {
   Controls,
   Dot,
   DotsContainer,
+  Heart,
   Name,
   NextSlide,
   NoBedroom,
@@ -15,10 +16,22 @@ import {
   PrevSlide,
   Slide,
 } from "./styles";
+import FavoriteIcon from "@material-ui/icons/Favorite";
+import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
+import {
+  useAddToFavoritesMutation,
+  useRemoveFromFavoritesMutation,
+} from "generated/graphql";
 
 const PropertyCard = (props) => {
   const [activeSlideNumber, setActiveSlideNumber] = useState(0);
 
+  const [addToFavorites] = useAddToFavoritesMutation({
+    variables: { propertyId: props.id },
+  });
+  const [removeFromFavorites] = useRemoveFromFavoritesMutation({
+    variables: { propertyId: props.id },
+  });
   const nextSlide = () =>
     setActiveSlideNumber((activeSlideNumber + 1) % props.images.length);
 
@@ -62,9 +75,39 @@ const PropertyCard = (props) => {
     <Dot key={"dot_" + i} style={dotsStyles[i]} />
   ));
 
+  const toggleFavorites = async () => {
+    try {
+      if (!props.favorite) {
+        await addToFavorites();
+      } else {
+        await removeFromFavorites();
+      }
+      await props.refetch();
+    } catch (error) {
+      console.log("failed to toggle favorite");
+    }
+  };
+
   return (
     <Card>
       <Controls>
+        {isAuth && !props.disableFavorite && props.name && (
+          <Fragment>
+            <Heart
+              style={{ display: props.favorite ? "none" : "block" }}
+              onClick={toggleFavorites}
+            >
+              <FavoriteBorderIcon />
+            </Heart>
+
+            <Heart
+              style={{ display: props.favorite ? "block" : "none" }}
+              onClick={toggleFavorites}
+            >
+              <FavoriteIcon />
+            </Heart>
+          </Fragment>
+        )}
         {!isSingleSlide() && (
           <div>
             <PrevSlide>

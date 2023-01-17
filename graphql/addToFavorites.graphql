@@ -1,0 +1,3 @@
+mutation addToFavorites($propertyId: String!) {
+  addToFavorites(propertyId: $propertyId)
+}

@@ -66,7 +66,7 @@ const ServicesContainer = styled.div`
   margin: 50px 0px;
 `;
 
-const PropertyInfo = ({ property }) => {
+const PropertyInfo = ({ property, refetch }) => {
   const isAuth = useIsAuthenticated();
 
   const goToLogin = () => {
@@ -77,7 +77,12 @@ const PropertyInfo = ({ property }) => {
     <div>
       <PageContainer>
         <LeftContainer>
-          <PropertyImageSlider images={property.images} />
+          <PropertyImageSlider
+            id={property.id}
+            refetch={refetch}
+            favorite={property.favorite}
+            images={property.images}
+          />
 
           <h1>{property.name}</h1>
 
