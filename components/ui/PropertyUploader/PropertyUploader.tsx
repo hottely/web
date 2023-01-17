@@ -12,7 +12,6 @@ import EuroIcon from "@material-ui/icons/Euro";
 import HotelIcon from "@material-ui/icons/Hotel";
 import firebase from "lib/firebase";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
-import Router from "next/router";
 import React, { useCallback, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { v4 } from "uuid";
@@ -20,6 +19,7 @@ import HottelyButton from "../HottelyButton/HottelyButton";
 import LoadingIndicator from "../LoadingIndicator";
 import ImagesDropzone from "./ImagesDropzone";
 import { useUploadPropertyMutation } from "generated/graphql";
+import Router, { useRouter } from "next/router";
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -75,6 +75,8 @@ function PropertyUploader({ amenities }) {
   const [uploads, setUploads] = useState(null);
   const [listing, setListing] = useState(false);
 
+  const router = useRouter();
+
   const onSubmit = async ({
     name,
     description,
@@ -104,7 +106,7 @@ function PropertyUploader({ amenities }) {
 
       setListing(false);
 
-      Router.replace("/landlord/listings");
+      router.replace("/landlord/listings");
       // uploads convert to urls
       console.log(res);
     } catch (err) {

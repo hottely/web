@@ -6,7 +6,9 @@ import withAuth from "lib/hocs/withAuth";
 import Router from "next/router";
 
 const ListingsPage = () => {
-  const { data } = useGetListingsQuery();
+  const { data } = useGetListingsQuery({
+    fetchPolicy: "network-only",
+  });
 
   const properties = data?.getListings || [];
 

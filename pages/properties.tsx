@@ -26,7 +26,9 @@ const TitleContainer = styled.div`
 `;
 
 const PropertiesPage = () => {
-  const { data, loading, error, refetch } = useGetPropertiesQuery();
+  const { data, loading, error, refetch } = useGetPropertiesQuery({
+    fetchPolicy: "network-only",
+  });
 
   const properties = data?.getProperties || [];
   const fetching = loading || error;

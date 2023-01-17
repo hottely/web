@@ -27,7 +27,9 @@ const TitleContainer = styled.div`
 `;
 
 const FavoritesPage = () => {
-  const { data, loading, refetch } = useGetFavoritesQuery();
+  const { data, loading, refetch } = useGetFavoritesQuery({
+    fetchPolicy: "network-only",
+  });
   const favorites = data?.getFavorites || [];
 
   return (

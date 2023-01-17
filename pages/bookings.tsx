@@ -6,7 +6,9 @@ import "react-dates/initialize";
 import "react-dates/lib/css/_datepicker.css";
 
 const BookingsPage = () => {
-  const { data } = useGetMyBookingsQuery();
+  const { data } = useGetMyBookingsQuery({
+    fetchPolicy: "network-only",
+  });
 
   const bookings = data?.getMyBookings || [];
 
