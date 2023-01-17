@@ -47,6 +47,7 @@ function ImagesDropzone({ disabled = false, files, onDrop }) {
     accept: {
       "image/png": [".png"],
       "image/jpeg": [".jpg", ".jpeg"],
+      "image/webp": [".webp"],
     },
     onDrop,
   });
