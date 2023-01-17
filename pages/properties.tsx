@@ -3,6 +3,7 @@ import DashboardLayout from "components/ui/Layout/DashboardLayout/DashboardLayou
 import LoadingIndicator from "components/ui/LoadingIndicator";
 import PropertyCard from "components/ui/PropertyCard/PropertyCard";
 import { useGetPropertiesQuery } from "generated/graphql";
+import withAuth from "lib/hocs/withAuth";
 import { lazy, useState } from "react";
 import styled from "styled-components";
 
@@ -86,4 +87,4 @@ const PropertiesPage = () => {
   );
 };
 
-export default PropertiesPage;
+export default withAuth(PropertiesPage);

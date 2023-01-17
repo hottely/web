@@ -103,11 +103,11 @@ const HomepageHeader = () => {
               {isAuth && (
                 <Button
                   onClick={() => {
-                    Router.push("/dashboard");
+                    Router.push("/properties");
                   }}
                   className="header-button"
                 >
-                  Go to dashboard
+                  Go to properties
                 </Button>
               )}
             </div>

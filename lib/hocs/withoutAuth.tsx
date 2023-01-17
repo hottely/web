@@ -9,7 +9,7 @@ import { parseCookies } from 'nookies';
  */
 export default function withoutAuth<P>(
   WrappedComponent: NextPage<P>,
-  location = '/dashboard'
+  location = '/properties'
 ): NextPage<P> {
   return withConditionalRedirect({
     WrappedComponent,

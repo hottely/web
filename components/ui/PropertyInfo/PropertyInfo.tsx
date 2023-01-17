@@ -1,6 +1,7 @@
 import BathtubIcon from "@material-ui/icons/Bathtub";
 import HotelIcon from "@material-ui/icons/Hotel";
 import PetsIcon from "@material-ui/icons/Pets";
+import BookPropertyDialog from "components/modals/BookPropertyDialog";
 import { useIsAuthenticated } from "lib/providers/Auth";
 
 import Router from "next/router";
@@ -167,6 +168,8 @@ const PropertyInfo = ({ property }) => {
 
       <PropertyForm>
         <h1>{property.price}€</h1>
+
+        {isAuth && <BookPropertyDialog id={property.id} />}
 
         {!isAuth && (
           <HottelyButton

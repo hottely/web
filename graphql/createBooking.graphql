@@ -1,0 +1,11 @@
+mutation createBooking(
+  $propertyId: String!
+  $startDate: String!
+  $endDate: String!
+) {
+  createBooking(
+    propertyId: $propertyId
+    startDate: $startDate
+    endDate: $endDate
+  )
+}

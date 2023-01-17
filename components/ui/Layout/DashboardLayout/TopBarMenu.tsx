@@ -26,13 +26,6 @@ const TopBarMenu = (props) => {
 
   const tabs = [
     {
-      text: "Dashboard",
-      path: "/dashboard",
-      action: () => {
-        Router.push("/dashboard");
-      },
-    },
-    {
       text: "Properties",
       path: "/properties",
       action: () => {
@@ -76,7 +69,7 @@ const TopBarMenu = (props) => {
     <Nav>
       <LogoText
         onClick={() => {
-          Router.push("/dashboard");
+          Router.push("/properties");
         }}
       >
         Hottely

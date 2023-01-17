@@ -1,0 +1,3 @@
+query getBookingsForProperty($propertyId: String!) {
+  getBookingsForProperty(propertyId: $propertyId)
+}

@@ -1,6 +1,6 @@
 import { gql } from '@apollo/client';
-import * as React from 'react';
 import * as Apollo from '@apollo/client';
+import * as React from 'react';
 import * as ApolloReactComponents from '@apollo/client/react/components';
 export type Maybe<T> = T | null;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
@@ -37,6 +37,7 @@ export type LoginResponse = {
 export type Mutation = {
   __typename?: 'Mutation';
   uploadProperty: Scalars['Boolean'];
+  createBooking: Scalars['Boolean'];
   editProfile?: Maybe<User>;
   login: LoginResponse;
   logout: Scalars['Boolean'];
@@ -47,6 +48,13 @@ export type Mutation = {
 
 export type MutationUploadPropertyArgs = {
   data: PropertyUploadInput;
+};
+
+
+export type MutationCreateBookingArgs = {
+  endDate: Scalars['String'];
+  startDate: Scalars['String'];
+  propertyId: Scalars['String'];
 };
 
 
@@ -87,15 +95,22 @@ export type PropertyUploadInput = {
 
 export type Query = {
   __typename?: 'Query';
-  getBookings: Scalars['JSON'];
   getProperties: Scalars['JSON'];
   getProperty: Scalars['JSON'];
   getListings: Scalars['JSON'];
+  getBookings: Scalars['JSON'];
+  getMyBookings: Scalars['JSON'];
+  getBookingsForProperty: Scalars['JSON'];
   me?: Maybe<User>;
 };
 
 
 export type QueryGetPropertyArgs = {
+  propertyId: Scalars['String'];
+};
+
+
+export type QueryGetBookingsForPropertyArgs = {
   propertyId: Scalars['String'];
 };
 
@@ -125,12 +140,42 @@ export type User = {
   updatedAt: Scalars['DateTime'];
 };
 
+export type CreateBookingMutationVariables = Exact<{
+  propertyId: Scalars['String'];
+  startDate: Scalars['String'];
+  endDate: Scalars['String'];
+}>;
+
+
+export type CreateBookingMutation = (
+  { __typename?: 'Mutation' }
+  & Pick<Mutation, 'createBooking'>
+);
+
+export type GetBookingsForPropertyQueryVariables = Exact<{
+  propertyId: Scalars['String'];
+}>;
+
+
+export type GetBookingsForPropertyQuery = (
+  { __typename?: 'Query' }
+  & Pick<Query, 'getBookingsForProperty'>
+);
+
 export type GetListingsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type GetListingsQuery = (
   { __typename?: 'Query' }
   & Pick<Query, 'getListings'>
+);
+
+export type GetMyBookingsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetMyBookingsQuery = (
+  { __typename?: 'Query' }
+  & Pick<Query, 'getMyBookings'>
 );
 
 export type GetPropertiesQueryVariables = Exact<{ [key: string]: never; }>;
@@ -226,6 +271,81 @@ export type UploadPropertyMutation = (
 );
 
 
+export const CreateBookingDocument = gql`
+    mutation createBooking($propertyId: String!, $startDate: String!, $endDate: String!) {
+  createBooking(propertyId: $propertyId, startDate: $startDate, endDate: $endDate)
+}
+    `;
+export type CreateBookingMutationFn = Apollo.MutationFunction<CreateBookingMutation, CreateBookingMutationVariables>;
+export type CreateBookingComponentProps = Omit<ApolloReactComponents.MutationComponentOptions<CreateBookingMutation, CreateBookingMutationVariables>, 'mutation'>;
+
+    export const CreateBookingComponent = (props: CreateBookingComponentProps) => (
+      <ApolloReactComponents.Mutation<CreateBookingMutation, CreateBookingMutationVariables> mutation={CreateBookingDocument} {...props} />
+    );
+    
+
+/**
+ * __useCreateBookingMutation__
+ *
+ * To run a mutation, you first call `useCreateBookingMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateBookingMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createBookingMutation, { data, loading, error }] = useCreateBookingMutation({
+ *   variables: {
+ *      propertyId: // value for 'propertyId'
+ *      startDate: // value for 'startDate'
+ *      endDate: // value for 'endDate'
+ *   },
+ * });
+ */
+export function useCreateBookingMutation(baseOptions?: Apollo.MutationHookOptions<CreateBookingMutation, CreateBookingMutationVariables>) {
+        return Apollo.useMutation<CreateBookingMutation, CreateBookingMutationVariables>(CreateBookingDocument, baseOptions);
+      }
+export type CreateBookingMutationHookResult = ReturnType<typeof useCreateBookingMutation>;
+export type CreateBookingMutationResult = Apollo.MutationResult<CreateBookingMutation>;
+export type CreateBookingMutationOptions = Apollo.BaseMutationOptions<CreateBookingMutation, CreateBookingMutationVariables>;
+export const GetBookingsForPropertyDocument = gql`
+    query getBookingsForProperty($propertyId: String!) {
+  getBookingsForProperty(propertyId: $propertyId)
+}
+    `;
+export type GetBookingsForPropertyComponentProps = Omit<ApolloReactComponents.QueryComponentOptions<GetBookingsForPropertyQuery, GetBookingsForPropertyQueryVariables>, 'query'> & ({ variables: GetBookingsForPropertyQueryVariables; skip?: boolean; } | { skip: boolean; });
+
+    export const GetBookingsForPropertyComponent = (props: GetBookingsForPropertyComponentProps) => (
+      <ApolloReactComponents.Query<GetBookingsForPropertyQuery, GetBookingsForPropertyQueryVariables> query={GetBookingsForPropertyDocument} {...props} />
+    );
+    
+
+/**
+ * __useGetBookingsForPropertyQuery__
+ *
+ * To run a query within a React component, call `useGetBookingsForPropertyQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetBookingsForPropertyQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetBookingsForPropertyQuery({
+ *   variables: {
+ *      propertyId: // value for 'propertyId'
+ *   },
+ * });
+ */
+export function useGetBookingsForPropertyQuery(baseOptions: Apollo.QueryHookOptions<GetBookingsForPropertyQuery, GetBookingsForPropertyQueryVariables>) {
+        return Apollo.useQuery<GetBookingsForPropertyQuery, GetBookingsForPropertyQueryVariables>(GetBookingsForPropertyDocument, baseOptions);
+      }
+export function useGetBookingsForPropertyLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetBookingsForPropertyQuery, GetBookingsForPropertyQueryVariables>) {
+          return Apollo.useLazyQuery<GetBookingsForPropertyQuery, GetBookingsForPropertyQueryVariables>(GetBookingsForPropertyDocument, baseOptions);
+        }
+export type GetBookingsForPropertyQueryHookResult = ReturnType<typeof useGetBookingsForPropertyQuery>;
+export type GetBookingsForPropertyLazyQueryHookResult = ReturnType<typeof useGetBookingsForPropertyLazyQuery>;
+export type GetBookingsForPropertyQueryResult = Apollo.QueryResult<GetBookingsForPropertyQuery, GetBookingsForPropertyQueryVariables>;
 export const GetListingsDocument = gql`
     query getListings {
   getListings
@@ -262,6 +382,42 @@ export function useGetListingsLazyQuery(baseOptions?: Apollo.LazyQueryHookOption
 export type GetListingsQueryHookResult = ReturnType<typeof useGetListingsQuery>;
 export type GetListingsLazyQueryHookResult = ReturnType<typeof useGetListingsLazyQuery>;
 export type GetListingsQueryResult = Apollo.QueryResult<GetListingsQuery, GetListingsQueryVariables>;
+export const GetMyBookingsDocument = gql`
+    query getMyBookings {
+  getMyBookings
+}
+    `;
+export type GetMyBookingsComponentProps = Omit<ApolloReactComponents.QueryComponentOptions<GetMyBookingsQuery, GetMyBookingsQueryVariables>, 'query'>;
+
+    export const GetMyBookingsComponent = (props: GetMyBookingsComponentProps) => (
+      <ApolloReactComponents.Query<GetMyBookingsQuery, GetMyBookingsQueryVariables> query={GetMyBookingsDocument} {...props} />
+    );
+    
+
+/**
+ * __useGetMyBookingsQuery__
+ *
+ * To run a query within a React component, call `useGetMyBookingsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetMyBookingsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetMyBookingsQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useGetMyBookingsQuery(baseOptions?: Apollo.QueryHookOptions<GetMyBookingsQuery, GetMyBookingsQueryVariables>) {
+        return Apollo.useQuery<GetMyBookingsQuery, GetMyBookingsQueryVariables>(GetMyBookingsDocument, baseOptions);
+      }
+export function useGetMyBookingsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetMyBookingsQuery, GetMyBookingsQueryVariables>) {
+          return Apollo.useLazyQuery<GetMyBookingsQuery, GetMyBookingsQueryVariables>(GetMyBookingsDocument, baseOptions);
+        }
+export type GetMyBookingsQueryHookResult = ReturnType<typeof useGetMyBookingsQuery>;
+export type GetMyBookingsLazyQueryHookResult = ReturnType<typeof useGetMyBookingsLazyQuery>;
+export type GetMyBookingsQueryResult = Apollo.QueryResult<GetMyBookingsQuery, GetMyBookingsQueryVariables>;
 export const GetPropertiesDocument = gql`
     query getProperties {
   getProperties
