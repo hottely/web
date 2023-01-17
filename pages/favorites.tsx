@@ -63,7 +63,11 @@ const FavoritesPage = () => {
                     sm={6}
                     lg={4}
                   >
-                    <PropertyCard {...property} refetch={refetch} />
+                    <PropertyCard
+                      {...property}
+                      favorite={true}
+                      refetch={refetch}
+                    />
                   </Grid>
                 ))}
               </Grid>
