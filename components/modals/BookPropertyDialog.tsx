@@ -65,8 +65,6 @@ const DialogTitle = (props) => {
 const BookPropertyDialog = ({ id }) => {
   const [open, setOpen] = useState(false);
   const [error, setError] = useState(false);
-
-  const [bookings, setBookings] = useState([]);
   const [startDate, setstartDate] = useState(null);
   const [endDate, setendDate] = useState(null);
   const [focusedInput, setfocusedInput] = useState(null);
@@ -81,6 +79,8 @@ const BookPropertyDialog = ({ id }) => {
   } = useGetBookingsForPropertyQuery({
     variables: { propertyId: id },
   });
+
+  const bookings = data?.getBookingsForProperty || [];
 
   const router = useRouter();
 
@@ -122,6 +122,8 @@ const BookPropertyDialog = ({ id }) => {
     setOpen(false);
   };
 
+  console.log("=============bookings", bookings);
+
   const isBlocked = (date) => {
     let bookedRanges = [];
     let blocked;
@@ -148,7 +150,6 @@ const BookPropertyDialog = ({ id }) => {
       </HottelyButton>
 
       <Dialog
-        // fullScreen
         fullWidth
         onClose={handleClose}
         open={open}
@@ -169,6 +170,7 @@ const BookPropertyDialog = ({ id }) => {
             {!loading && (
               <Fragment>
                 <DateRangePicker
+                  displayFormat="DD.MM.YYYY"
                   transitionDuration={0}
                   isDayBlocked={isBlocked}
                   startDateId="startDate"

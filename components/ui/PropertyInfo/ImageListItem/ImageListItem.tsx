@@ -8,7 +8,7 @@ const ItemContainer = styled.div`
   display: flex;
   align-items: center;
   img {
-    width: 45px; // height: 30px;
+    width: 45px;
   }
   span {
     color: black;

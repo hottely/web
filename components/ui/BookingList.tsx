@@ -1,5 +1,6 @@
 import { Card } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
+import moment from "moment";
 import Router from "next/router";
 
 const useStyles = makeStyles({
@@ -36,8 +37,8 @@ export default function BookingList({ bookings = [] }) {
     <div className={classes.container}>
       {data.map((row) => (
         <Card className={classes.bookingContainer} key={row.id}>
-          <p>Start date: {row.startDate}</p>
-          <p>End date: {row.endDate}</p>
+          <p>Start date: {moment(row.startDate).format("DD.MM.YYYY")}</p>
+          <p>End date: {moment(row.endDate).format("DD.MM.YYYY")}</p>
           <p
             style={{ cursor: "pointer", color: "blue" }}
             onClick={() => {
