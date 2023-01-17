@@ -45,7 +45,7 @@ const PropertyImageSlider = ({ images, favorite, id, refetch }) => {
 
   return (
     <div style={{ color: "black", position: "relative", width: "100%" }}>
-      <div style={{ position: "relative", zIndex: 9999 }}>
+      <div style={{ position: "relative", zIndex: 10 }}>
         {isAuth && (
           <Button
             variant="contained"
