@@ -20,6 +20,10 @@ const ResponsiveDrawer = ({ classes, open = false, onClose, isAuth }) => {
       route: "/bookings",
     },
     {
+      name: "Properties",
+      route: "/properties",
+    },
+    {
       name: "My listings",
       route: "/landlord/listings",
     },

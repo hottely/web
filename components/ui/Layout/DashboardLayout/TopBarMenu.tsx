@@ -33,6 +33,13 @@ const TopBarMenu = (props) => {
       },
     },
     {
+      text: "Properties",
+      path: "/properties",
+      action: () => {
+        Router.push("/properties");
+      },
+    },
+    {
       text: "Bookings",
       path: "/bookings",
       action: () => {

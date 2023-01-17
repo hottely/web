@@ -1,0 +1,3 @@
+query getProperty($propertyId: String!) {
+  getProperty(propertyId: $propertyId)
+}

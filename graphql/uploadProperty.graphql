@@ -1,0 +1,23 @@
+mutation uploadProperty(
+  $name: String!
+  $description: String!
+  $price: Float!
+  $bedrooms: Int!
+  $bathrooms: Int!
+  $pets: Boolean!
+  $amenities: [String!]!
+  $images: [String!]!
+) {
+  uploadProperty(
+    data: {
+      name: $name
+      description: $description
+      price: $price
+      bedrooms: $bedrooms
+      bathrooms: $bathrooms
+      pets: $pets
+      amenities: $amenities
+      images: $images
+    }
+  )
+}
